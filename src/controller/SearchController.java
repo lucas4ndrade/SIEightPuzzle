@@ -63,11 +63,6 @@ public class SearchController {
             {9, 6, 5}
         };
 
-        initialState = new int[][]{
-            {4, 8, 6},
-            {7, 2, 3},
-            {5, 1, 9}
-        };
         return new Board(initialState);
     }
 
