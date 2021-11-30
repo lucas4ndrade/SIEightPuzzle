@@ -9,11 +9,11 @@ public class AppView {
     }
 
     public void printAlgorithmSelection(){
-        System.out.println("[1] Custo uniforme");
-        System.out.println("[2] A* simples");
-        System.out.println("[3] A* detalhado");
+        System.out.println("[1] Custo uniforme.");
+        System.out.println("[2] A* simples.");
+        System.out.println("[3] A* detalhado.");
         System.out.println("");
-        System.out.println("[i] Detalhes");
+        System.out.println("[i] Detalhes.");
         System.out.print("Escolha: ");
     }
 
@@ -32,10 +32,27 @@ public class AppView {
         System.out.println("Aperte enter para continuar.");
     }
 
+    public void printBoardSelection() {
+        System.out.println("Como você deseja iniciar o tabuleiro?");
+        System.out.println("[1] Gerar um tabuleiro para mim.");
+        System.out.println("[2] Quero indicar um tabuleiro.");
+        System.out.print("Escolha: ");
+    }
+
+    public void printBoardInput() {
+        System.out.println("Entre um tabuleiro separando cada linha por um caractere ':'.");
+        System.out.println("Nota: o espaço em branco do tabuleiro é representado pelo maior número.");
+        System.out.println("Ex.: A entrada do tabuleiro:");
+        System.out.println("[123]\n[456]\n[78 ]");
+        System.out.println("Seria 123:456:789");
+        System.out.print("Entrada: ");
+    }
+
     public void printInitialBoard(Board board) {
         System.out.println("O seu tabuleiro inicial é:");
         System.out.println(board.toString());
-        System.out.println("Aperte enter para iniciar.");
+        System.out.println("[1] Começar busca.");
+        System.out.println("[2] Voltar.");
     }
 
     public void printGameEnd(long elapsedTime) {

@@ -12,15 +12,14 @@ public class SearchController {
     private Scanner sc = new Scanner(System.in);
     private AppView view = new AppView();
     private SearchAlgorithm selectedAlgorithm;
+    private Board initialBoard;
 
 
     public void startSearch() {
         this.view.printWelcome();
         this.computeAlgorithmSelection();
 
-        Board initialBoard = this.generateInitalBoard();
-        this.view.printInitialBoard(initialBoard);
-        sc.nextLine();
+        this.initBoard();
 
         PriorityQueue<Board> pq = new PriorityQueue<Board>(new BoardComparator(this.selectedAlgorithm));
         pq.add(initialBoard);
@@ -49,20 +48,72 @@ public class SearchController {
     }
 
     //TODO randomize this!
-    private Board generateInitalBoard() {
+    private void initBoard() {
+        this.view.printBoardSelection();
+        String selection = sc.nextLine();
+        switch (selection) {
+            case "1":
+                this.initialBoard = this.getDefaultBoard();
+                break;
+            case "2":
+                this.initialBoard = this.processBoardInput();
+                break;
+            default:
+                this.view.printWrongSelection();
+                this.initBoard();
+                break;
+        }
+
+        this.getBoardConfirmation();
+    }
+
+    private Board getDefaultBoard() {
         /**
          * ESTADO DE TABULEIRO BOM PARA TESTES!!
          * usando custo uniforme -> 1277 milisegundos
          * usando A* simples -> 21 milisegundos
          * usando A* manhattan -> 3 milisegundos
         */
-        int[][] initialState = new int[][]{
+        int[][] defaultBoard = new int[][]{
             {4, 8, 1},
             {7, 2, 3},
             {9, 6, 5}
         };
 
-        return new Board(initialState);
+        return new Board(defaultBoard);
+    }
+
+    private Board processBoardInput() {
+        this.view.printBoardInput();
+        String input = sc.nextLine();
+
+        String[] sepInput = input.split(":");
+        int[][] inputBoard = new int[sepInput.length][sepInput.length];
+        for (int i = 0; i < sepInput.length; i++) {
+            char[] boardLineChars = sepInput[i].toCharArray();
+            for (int j = 0; j < boardLineChars.length; j++) {
+                char c = boardLineChars[j];
+                inputBoard[i][j] = Character.getNumericValue(c);
+            }
+        }
+
+        return new Board(inputBoard);
+    }
+
+    private void getBoardConfirmation() {
+        this.view.printInitialBoard(this.initialBoard);
+        String selection = sc.nextLine();
+        switch (selection) {
+            case "1":
+                break;
+            case "2":
+                this.initBoard();
+                break;
+            default:
+                this.view.printWrongSelection();
+                this.getBoardConfirmation();
+                break;
+        }
     }
 
     private void computeAlgorithmSelection() {
